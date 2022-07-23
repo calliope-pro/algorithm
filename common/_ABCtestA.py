@@ -16,7 +16,7 @@ if 'PyPy' not in sys.version:
 
 rr = lambda: sys.stdin.readline().rstrip()
 rs = lambda: sys.stdin.readline().split()
-rsl = lambda: list(sys.stdin.readline().split())
+rsl = lambda: list(sys.stdin.readline().rstrip())
 ri = lambda: int(sys.stdin.readline())
 rm = lambda: map(int, sys.stdin.readline().split())
 rf = lambda: map(float, sys.stdin.readline().split())
@@ -30,10 +30,4 @@ au = ascii_uppercase
 
 # sys.setrecursionlimit(100000)
 
-
-a, b, d = rm()
-
-theta = math.atan2(b, a)
-theta += math.radians(d)
-print((a**2 + b**2)**0.5 * math.cos(theta), (a**2 + b**2)**0.5 * math.sin(theta))
 
