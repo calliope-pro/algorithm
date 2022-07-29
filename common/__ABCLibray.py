@@ -1,5 +1,10 @@
 import math
 
+def calc_triangle_area(x0, y0, x1, y1, x2, y2):
+    area = (x1 - x0)*(y2 - y0) - (x2 - x0)*(y1 - y0)
+    area = 1/2 * abs(area)
+    return area
+
 class UnionFind:
     '''UnionFind
     
