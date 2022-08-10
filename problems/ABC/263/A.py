@@ -1,5 +1,5 @@
 # ABC263-A
-# Counterも用いた
+# Counterを用いた
 import sys
 import collections
 
