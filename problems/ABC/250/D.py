@@ -19,7 +19,7 @@ def get_prime_list(n: int):
     List[int]
         2 ~ nにおける素数リスト
     '''
-    assert n >= 0, '`n` must be 0 or more.'
+    assert n >= 1, '`n` must be 1 or more.'
     prime_list = []
     is_prime_list = [True] * (n+1)
     is_prime_list[0] = False
