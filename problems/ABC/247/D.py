@@ -1,3 +1,5 @@
+# ABC247-D
+# RLEとdequeを使うことで計算量を抑えられる
 import sys
 import collections
 
