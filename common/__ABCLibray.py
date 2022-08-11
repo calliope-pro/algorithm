@@ -1,9 +1,35 @@
 import math
+from typing import List
 
 def calc_triangle_area(x0, y0, x1, y1, x2, y2):
     area = (x1 - x0)*(y2 - y0) - (x2 - x0)*(y1 - y0)
     area = 1/2 * abs(area)
     return area
+
+def get_prime_list(n: int) -> List[int]:
+    '''
+    エラトステネスの篩を用いた素数列挙
+
+    Parameters
+    ----------
+    n : int
+        最大値
+    Returns
+    -------
+    List[int]
+        2 ~ nにおける素数リスト
+    '''
+    assert n >= 0, '`n` must be 0 or more.'
+    prime_list = []
+    is_prime_list = [True] * (n+1)
+    is_prime_list[0] = False
+    is_prime_list[1] = False
+    for i in range(2, n+1):
+        if is_prime_list[i]:
+            prime_list.append(i)
+            for j in range(i, n+1, i):
+                is_prime_list[j] = False
+    return prime_list
 
 class UnionFind:
     '''UnionFind
