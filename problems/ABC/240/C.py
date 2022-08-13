@@ -16,6 +16,7 @@ def f(t=0, now=0):
         return now == x
     return f(t+1, now+ab[t][0]) or f(t+1, now+ab[t][1])
 
+# dpによる実装
 dp = [[None]*10001 for _ in range(101)]
 def f(t=0, now=0):
     if dp[t][now] is not None:
