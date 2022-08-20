@@ -1,3 +1,4 @@
+import bisect
 import sys
 import math
 import itertools
