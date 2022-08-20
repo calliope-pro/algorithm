@@ -29,6 +29,6 @@ mod2 = 998244353
 al = ascii_lowercase
 au = ascii_uppercase
 
-sys.setrecursionlimit(10000000)
+# sys.setrecursionlimit(10000000)
 
 
