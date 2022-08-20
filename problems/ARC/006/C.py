@@ -18,4 +18,3 @@ for _ in range(n):
     else:
         li.append(w)
 print(len(li))
-
