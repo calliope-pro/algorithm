@@ -1,3 +1,5 @@
+# jsc2021-A
+# math.ceilを使い数学的に実装
 import sys
 import math
 
