@@ -1,12 +1,28 @@
 import math
+from typing import List, Sequence
 
 def calc_triangle_area(x0, y0, x1, y1, x2, y2):
     area = (x1 - x0)*(y2 - y0) - (x2 - x0)*(y1 - y0)
     area = 1/2 * abs(area)
     return area
 
+def rotate90(m: Sequence[Sequence]) -> List[tuple]:
+    '''
+    二次元の配列やシーケンスを右に90度回転
+
+    Parameters
+    ----------
+    m : Sequence[Sequence]
+        回転させたい二次元配列およびそれに近しいシーケンス
+
+    Returns
+    -------
+    List[tuple]
+        回転後の行列
+    '''
+    return list(zip(*m[::-1]))
+
 class PrimeManager:
-    from typing import List
     @classmethod
     def get_prime_list(cls, n: int) -> List[int]:
         '''
