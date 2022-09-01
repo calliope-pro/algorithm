@@ -1,3 +1,5 @@
+# ABC258-A
+# 日付操作ライブラリで楽した
 import sys
 from datetime import datetime, timedelta
 

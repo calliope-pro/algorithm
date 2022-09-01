@@ -1,3 +1,5 @@
+# ABC258-C
+# インデックスの管理が出来ればあとは単にスライス
 import sys
 
 rr = lambda: sys.stdin.readline().rstrip()
