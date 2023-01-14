@@ -1,5 +1,5 @@
 import math
-from typing import List, Sequence
+from typing import List, Sequence, Optional
 
 def rotate90(m: Sequence[Sequence]) -> List[tuple]:
     '''
@@ -96,7 +96,7 @@ class PrimeHandler:
         return prime_list
     
     @classmethod
-    def prime_factorization(cls, n: int, *, is_decoded: bool=False) -> List[int]:
+    def prime_factorization(cls, n: int, *, is_decoded: bool=False, ps: Optional[List[int]]=None) -> List[int]:
         '''
         素因数分解し、素因数列挙
 
@@ -106,6 +106,8 @@ class PrimeHandler:
             素因数分解する数
         is_decoded : bool, optional
             展開するか, by default False
+        ps : List[int] | None, optional
+            事前に準備された素数のリスト
 
         Returns
         -------
@@ -114,7 +116,8 @@ class PrimeHandler:
             展開している場合は各々の素因数の個数入っている
         '''
         prime_list = []
-        ps = cls.get_prime_list(math.ceil(n**0.5) + 1)
+        if ps is None:
+            ps = cls.get_prime_list(math.ceil(n**0.5) + 1)
         for psv in ps:
             if n % psv != 0:
                 continue
