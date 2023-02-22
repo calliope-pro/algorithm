@@ -1,5 +1,5 @@
 import math
-from typing import List, Sequence, Optional
+from typing import cast, List, Sequence, Optional, Protocol
 
 def rotate90(m: Sequence[Sequence]) -> List[tuple]:
     '''
@@ -182,126 +182,149 @@ class UnionFind:
             else:
                 self.par_[x] = y
 
-class SegTree:
-    from operator import add
-    '''SegmentTree
-    
+class Operator(Protocol):
+    def __call__(self, *args: int) -> int:
+        ...
+
+class SegmentTree:
+    '''
+    セグメントツリー
+
     Attributes
     ----------
-    nodes: list of int or float
-    monoid: int or float
-        単位元, Monoid
-    nodes_length: int
-        objectの長さ以上の最小の2^k-1
-        The smallest 2^k-1 over the length of object
-    seg_func: function
+    tree : List[int]
+        セグメントツリーの木構造配列
+    monoid : int
+        単位元
+    operator : Operator
+        評価関数
     '''
-    nodes = None
-    monoid = None
-    nodes_length = None
-    seg_func = None
+    tree: List[int]
+    monoid: int
+    operator: Operator
 
-    def __init__(self, object, *, monoid=0, seg_func=add):
+    def __init__(
+        self,
+        base_array: List[int],
+        *,
+        monoid: int = cast(int, float("inf")),
+        operator: Operator = min
+    ) -> None:
         '''
+        セグメントツリーインスタンス生成
+
         Parameters
         ----------
-        object: array_like
-            
-        monoid: int or float default 0
-            単位元, Monoid
-        seg_func: function default operator.add
-            セグ木にて用いる関数
-            Function used in SegTree
+        base_array : List[int]
+            元となる配列
+        monoid : int, optional
+            単位元, by default cast(int, float("inf"))
+        operator : Operator, optional
+            評価関数, by default min
         '''
-        bin_n = bin(len(object))[2:]
-        sum_bin_n = sum(int(i) for i in bin_n)
-        if sum_bin_n == 1:
-            cnt_nodes = 2**(len(bin_n) - 1)
-        else:
-            cnt_nodes = 2**len(bin_n)
-
         self.monoid = monoid
-        self.nodes_length = 2*cnt_nodes - 1
-        self.seg_func = seg_func
-        self.nodes = [monoid] * (2*cnt_nodes - 1)
-        
-        for i, v in enumerate(object):
-            self.update(i, v)
-            self.eval(i)
-
-    def get_node_idx(self, node):
-        '''get node_idx in SegTree
-        Parameters
-        ----------
-        node: int
-            objectにおけるnodeのインデックス
-            Index of node in object
-        Returns
-        -------
-        node_idx: int
-            node_idx in SegTree
-        '''
-        node_idx = self.nodes_length//2 + node
-        return node_idx
-    
-    def update(self, node, val):
-        '''
-        Parameters
-        ----------
-        node: int
-            objectにおけるnodeのインデックス
-            Index of node in object
-        val: int or float
-            変えたい値
-            Value to replace
-        '''
-        node_idx = self.get_node_idx(node)
-        self.nodes[node_idx] = val
-
-    def eval(self, node):
-        '''
-        Parameters
-        ----------
-        node: int
-            objectにおけるnodeのインデックス
-            Index of node in object
-        '''
-        node_idx = self.get_node_idx(node)
-        while node_idx > 0:
-            node_idx = math.ceil(node_idx/2) - 1
-            self.nodes[node_idx] = self.seg_func(
-                self.nodes[node_idx*2 + 1],
-                self.nodes[node_idx*2 + 2]
+        self.operator = operator
+        base_array_length = len(base_array)
+        segment_tree_length = 2 ** (math.ceil(math.log2(base_array_length)) + 1) - 1
+        self.tree = (
+            [monoid] * (segment_tree_length // 2)
+            + [*base_array]
+            + [monoid] * ((segment_tree_length + 1) // 2 - base_array_length)
+        )
+        for i in range(segment_tree_length // 2 - 1, -1, -1):
+            left_child_idx = i * 2 + 1
+            self.tree[i] = self.operator(
+                self.tree[left_child_idx], self.tree[left_child_idx + 1]
             )
 
-    def _get(self, query_left, query_right, _node_idx=0, _layer_left=0, _depth=1):
-        '''
-        Notes
-        -----
-        Don't change _node_idx, _layer_left, _depth
-        '''
-        cnt_layer_nodes = (self.nodes_length + 1) // (2**_depth)
-        layer_right = _layer_left + cnt_layer_nodes - 1
+    def get(self, idx: int) -> int:
+        """
+        要素を取得
 
-        if _layer_left > query_right or layer_right < query_left:
-            return self.monoid
-        
-        elif _layer_left >= query_left and layer_right <= query_right:
-            return self.nodes[_node_idx]
-        
-        else:
-            val_left = self._get(query_left, query_right, _node_idx*2+1, _layer_left, _depth+1)
-            val_right = self._get(query_left, query_right, _node_idx*2+2, _layer_left + cnt_layer_nodes//2, _depth+1)
-            return self.seg_func(val_right, val_left)
-    
-    def get(self, query_left, query_right):
-        '''
+        Parameters
+        ----------
+        idx : int
+            元の配列におけるindex
+
         Returns
         -------
-        self._get(query_left, query_right): int or float
-            閉区間[query_left, query_right]の値
-            Value of closed section[query_left, query_right]
+        int
+            指定された要素
+        """
+        tree_idx = len(self.tree) // 2 + idx
+        return self.tree[tree_idx]
+
+    def update(self, idx: int, new_value: int) -> None:
+        """
+        要素を更新
+
+        Parameters
+        ----------
+        idx : int
+            元の配列におけるindex
+        new_value : int
+            新たな値
+        """
+        tree_idx = len(self.tree) // 2 + idx
+        self.tree[tree_idx] = new_value
+        while tree_idx > 0:
+            tree_idx = (tree_idx - 1) // 2
+            prev_value = self.tree[tree_idx]
+            self.tree[tree_idx] = self.operator(
+                self.tree[2 * tree_idx + 1], self.tree[2 * tree_idx + 2]
+            )
+            if prev_value == self.tree[tree_idx]:
+                break
+
+    def eval(self, left_idx: int, right_idx: int) -> int:
+        """
+        半開区間[left_idx, right_idx)を評価
+
+        Parameters
+        ----------
+        left_idx : int
+            元の配列における左側のindex
+        right_idx : int
+            元の配列における右側のindex
+
+        Returns
+        -------
+        int
+            評価された値
+        """
+        return self._eval(left_idx, right_idx)
+
+    def _eval(self, left_idx: int, right_idx: int, *, _l=0, _r=None) -> int:
         '''
-        if query_right == -1:
-            query_right = (self.nodes_length + 1) // 2
-        return self._get(query_left, query_right)
+        半開区間[left_idx, right_idx)を再帰的評価
+
+        Parameters
+        ----------
+        left_idx : int
+            元の配列における左側のindex
+        right_idx : int
+            元の配列における右側のindex
+        _l : int, optional
+            対象となる区間の左側index, by default 0
+        _r : int, optional
+            対象となる区間の左側index, by default None
+
+        Returns
+        -------
+        int
+            評価された値
+        '''
+        if _r is None:
+            _r = (len(self.tree) + 1) // 2
+        if _r <= left_idx or _l >= right_idx:
+            return self.monoid
+        if left_idx <= _l and _r <= right_idx:
+            max_layer = math.log2((len(self.tree) + 1) // 2)
+            current_layer = math.log2(_r - _l)
+            tree_idx = 2 ** (max_layer - current_layer) - 1 + _r // (_r - _l) - 1
+            return self.tree[int(tree_idx)]
+        mid = (_l + _r) // 2
+        return self.operator(
+            self._eval(left_idx, right_idx, _l=_l, _r=mid),
+            self._eval(left_idx, right_idx, _l=mid, _r=_r),
+        )
