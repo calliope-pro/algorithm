@@ -1,0 +1,48 @@
+{
+	// Place your algorithm workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+	// Placeholders with the same ids are connected.
+	// Example:
+	"algorithm template": {
+		"scope": "python",
+		"prefix": "alg",
+		"body": [
+			"import bisect",
+			"import sys",
+			"import math",
+			"import itertools",
+			"import collections",
+			"import heapq",
+			"import re",
+			"import queue",
+			"from datetime import datetime, timedelta",
+			"from decimal import Decimal, ROUND_HALF_UP",
+			"from functools import reduce, lru_cache",
+			"from string import ascii_lowercase, ascii_uppercase",
+			"",
+			"if 'PyPy' not in sys.version:",
+			"\timport numpy as np",
+			"\tfrom scipy.special import comb",
+			"",
+			"rr = lambda: sys.stdin.readline().rstrip()",
+			"rs = lambda: sys.stdin.readline().split()",
+			"rsl = lambda: list(sys.stdin.readline().rstrip())",
+			"ri = lambda: int(sys.stdin.readline())",
+			"rm = lambda: map(int, sys.stdin.readline().split())",
+			"rf = lambda: map(float, sys.stdin.readline().split())",
+			"rd = lambda: map(Decimal, sys.stdin.readline().split())",
+			"rl = lambda: list(map(int, sys.stdin.readline().split()))",
+			"inf = float('inf')",
+			"mod1 = 10**9 + 7",
+			"mod2 = 998244353",
+			"al = ascii_lowercase",
+			"au = ascii_uppercase",
+			"",
+			"# sys.setrecursionlimit(10000000)",
+		],
+		"description": "Log output to console",
+	}
+}
