@@ -38,5 +38,3 @@ if len(ans) == n:
     print(*ans)
 else:
     print(-1)
-
-
