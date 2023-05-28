@@ -16,10 +16,10 @@ mi_abs = inf
 cnt_neg = 0
 for av in al:
     if av < 0:
-        cnt_neg += 1
+        cnt_neg ^= 1
     mi_abs = min(abs(av), mi_abs)
     abs_sum += abs(av)
-if cnt_neg & 1 == 0:
+if cnt_neg == 0:
     print(abs_sum)
 else:
     print(abs_sum - 2*mi_abs)
