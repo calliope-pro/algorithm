@@ -1,11 +1,10 @@
-# ABC304-C
-# PyPy only
-# CでUnion-Findか。。。インフレおかしすぎて
-# 1とルートが同じかどうかを考える。BFSとかでもいいけど
+# ABC304-E
+# Union-Find使う + set使うだけ
+# 繋げるべき点のルートがあるかどうか検証するだけ
 import sys
 
+ri = lambda: int(sys.stdin.readline())
 rm = lambda: map(int, sys.stdin.readline().split())
-rl = lambda: list(map(int, sys.stdin.readline().split()))
 
 class UnionFind:
     '''UnionFind
@@ -57,16 +56,28 @@ class UnionFind:
             else:
                 self.par_[x] = y
 
-n, d = rm()
-uf = UnionFind(n+10)
-xy = [rl() for _ in range(n)]
-for idx, (x, y) in enumerate(xy[1:], 1):
-    for idx_, (x_, y_) in enumerate(xy[:idx]):
-        if (x-x_)**2 + (y-y_)**2 <= d**2:
-            uf.union(idx, idx_)
-root_0 = uf.root(0)
-for i in range(n):
-    if root_0 == uf.root(i):
-        print('Yes')
-    else:
+n, m = rm()
+uf = UnionFind(n+5)
+for _ in range(m):
+    u, v = rm()
+    u -= 1
+    v -= 1
+    uf.union(u, v)
+k = ri()
+xy = set()
+for _ in range(k):
+    x, y = rm()
+    x -= 1
+    y -= 1
+    xy.add((uf.root(x), uf.root(y)))
+q_ = ri()
+for _ in range(q_):
+    p, q = rm()
+    p -= 1
+    q -= 1
+    root_p = uf.root(p)
+    root_q = uf.root(q)
+    if (root_q, root_p) in xy or (root_p, root_q) in xy:
         print('No')
+    else:
+        print('Yes')
