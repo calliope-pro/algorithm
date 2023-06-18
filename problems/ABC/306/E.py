@@ -1,5 +1,11 @@
-# https://note.com/argovi/n/nc29ff59af04dよりコピペ
+# ABC306-E
+# multisetと遷移の条件分岐
+# Pythonでmultisetやめちくり
+import sys
 import heapq
+
+rm = lambda: map(int, sys.stdin.readline().split())
+
 class MultiSet:
     """多重集合
 
@@ -25,7 +31,7 @@ class MultiSet:
         heapq.heappush(self.rank_min, num)
         heapq.heappush(self.rank_max, -num)
 
-    def erase(self, num, d):
+    def erase(self, num, d=1):
         """要素の削除
 
         集合から指定要素を指定個数消す。
@@ -48,7 +54,43 @@ class MultiSet:
         while self.cnt_dict[self.rank_min[0]] == 0:
             heapq.heappop(self.rank_min)
         return self.rank_min[0]
-
+    
     def __contains__(self, num):
-        
         return self.cnt_dict.get(num, 0) > 0
+
+
+n, k, q = rm()
+al = [0] * n
+ms_upper = MultiSet()
+ms_upper.add(0, d=k)
+ms_lower = MultiSet()
+ms_lower.add(0, d=max(n-k, 1))
+sum_ = 0
+for _ in range(q):
+    x, y = rm()
+    av = al[x-1]
+    al[x-1] = y
+    min_ = ms_upper.get_min()
+    max_ = ms_lower.get_max()
+    if av in ms_upper:
+        if y > max_:
+            sum_ += y - av
+            ms_upper.erase(av)
+            ms_upper.add(y)
+        else:
+            ms_upper.erase(av)
+            ms_lower.erase(max_)
+            ms_upper.add(max_)
+            ms_lower.add(y)
+            sum_ += max_ - av
+    else:
+        if y >= min_:
+            sum_ += y - min_
+            ms_lower.erase(av)
+            ms_upper.erase(min_)
+            ms_upper.add(y)
+            ms_lower.add(min_)
+        else:
+            ms_lower.erase(av)
+            ms_lower.add(y)
+    print(sum_)
