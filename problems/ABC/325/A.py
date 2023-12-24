@@ -1,4 +1,4 @@
-# ABC325 - A
+# ABC325-A
 # f-stringを使うだけ
 import sys
 

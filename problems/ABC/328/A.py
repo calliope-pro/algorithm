@@ -1,4 +1,4 @@
-# ABC328 - A
+# ABC328-A
 # filterを内包表記で実装するだけ
 import sys
 

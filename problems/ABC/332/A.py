@@ -1,4 +1,4 @@
-# ABC332 - A
+# ABC332-A
 # 数回queryとって計算するだけ
 import sys
 

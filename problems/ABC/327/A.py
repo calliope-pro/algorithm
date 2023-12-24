@@ -1,4 +1,4 @@
-# ABC327 - A
+# ABC327-A
 # sが短いので愚直に探索するだけ
 import sys
 

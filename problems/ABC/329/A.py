@@ -1,4 +1,4 @@
-# ABC329 - A
+# ABC329-A
 # 文字列はiterableなので、joinでスペース区切りにするだけ
 import sys
 

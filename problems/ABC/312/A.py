@@ -1,3 +1,5 @@
+# ABC312A
+# setを使うだけ
 import sys
 
 rr = lambda: sys.stdin.readline().rstrip()

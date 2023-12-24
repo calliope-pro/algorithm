@@ -1,4 +1,4 @@
-# ABC326 - A
+# ABC326-A
 # 比較をするだけ
 import sys
 

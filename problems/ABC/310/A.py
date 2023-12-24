@@ -1,4 +1,4 @@
-# ABC310A
+# ABC310-A
 # minを使えば余裕
 import sys
 

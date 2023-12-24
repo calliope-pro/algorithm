@@ -1,4 +1,4 @@
-# ABC331 - A
+# ABC331-A
 # それぞれのy,m,dをうまく処理するだけ
 import sys
 

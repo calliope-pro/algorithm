@@ -1,4 +1,4 @@
-# ABC323 - A
+# ABC323-A
 # rangeをうまく使うだけ
 import sys
 

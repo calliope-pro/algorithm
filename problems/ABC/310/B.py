@@ -1,4 +1,4 @@
-# ABC310B
+# ABC310-B
 # setとitertools.permutationsを使うと簡単に解ける
 import sys
 import itertools

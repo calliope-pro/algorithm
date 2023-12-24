@@ -1,4 +1,4 @@
-# ABC324 - A
+# ABC324-A
 # 脳死でsetを使う
 import sys
 
