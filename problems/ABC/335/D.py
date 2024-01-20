@@ -1,6 +1,7 @@
 # ABC335-D
 # Python only
 # numpyで回転 + 代入を強引にしたw
+# 多分DFS的やり方の方が楽だと思うw
 import sys
 
 if "PyPy" not in sys.version:
