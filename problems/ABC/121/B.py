@@ -1,5 +1,4 @@
 # ABC121-B
-# Python only
 # numpyで内積だとして考える
 import sys
 import numpy as np
@@ -11,7 +10,7 @@ n, m, c = rm()
 b = np.array(rl())
 cnt = 0
 for _ in range(n):
-  a = np.array(rl())
-  if np.sum(a*b) > -c:
-    cnt += 1
+    a = np.array(rl())
+    if np.sum(a * b) > -c:
+        cnt += 1
 print(cnt)
