@@ -1,19 +1,17 @@
 import bisect
-import sys
-import math
-import itertools
 import collections
 import heapq
-import re
+import itertools
+import math
+import numpy as np
 import queue
+import re
+import sys
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
 from functools import reduce, lru_cache
+from scipy.special import comb
 from string import ascii_lowercase, ascii_uppercase
-
-if 'PyPy' not in sys.version:
-    import numpy as np
-    from scipy.special import comb
 
 rr = lambda: sys.stdin.readline().rstrip()
 rs = lambda: sys.stdin.readline().split()
